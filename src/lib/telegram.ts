@@ -32,6 +32,8 @@ interface TelegramWebApp {
   onEvent: (event: 'themeChanged' | string, handler: () => void) => void;
   openTelegramLink: (url: string) => void;
   isVersionAtLeast: (version: string) => boolean;
+  sendData: (data: string) => void;
+  close: () => void;
 }
 
 declare global {
@@ -97,4 +99,13 @@ export function haptic(style: 'light' | 'medium' | 'heavy' = 'light'): void {
 export function hapticNotify(type: 'error' | 'success' | 'warning'): void {
   const app = getWebApp();
   if (app && supportsHaptics(app)) app.HapticFeedback.notificationOccurred(type);
+}
+
+/** Send callback to the bot and close the Mini App. Data is sent as web_app_data to the bot. */
+export function sendBotCallback(callbackData: string): void {
+  const app = getWebApp();
+  if (!app) return;
+  app.sendData(callbackData);
+  // Close the mini app after sending data
+  setTimeout(() => app.close(), 100);
 }

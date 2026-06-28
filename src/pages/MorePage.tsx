@@ -1,5 +1,5 @@
 import { Card } from '@/components/Card';
-import { openBotLink, haptic, isOutsideTelegram } from '@/lib/telegram';
+import { openBotLink, haptic, isOutsideTelegram, sendBotCallback } from '@/lib/telegram';
 import { refBotMenuLink } from '@/lib/links';
 import { clearManualUserId, getManualUserId } from '@/lib/manualAuth';
 
@@ -32,9 +32,9 @@ export function MorePage() {
       </Card>
 
       <Card className="divide-y divide-white/5">
-        <ActionRow title="Открыть вывод в боте" onClick={() => openBotLink(refBotMenuLink())} />
-        <ActionRow title="Открыть чат" onClick={() => openBotLink(refBotMenuLink())} />
-        <ActionRow title="Открыть меню бота" onClick={() => openBotLink(refBotMenuLink())} />
+        <ActionRow title="Открыть вывод в боте" onClick={() => sendBotCallback('ref_open_withdrawal')} />
+        <ActionRow title="Открыть чат" onClick={() => sendBotCallback('ref_open_chat')} />
+        <ActionRow title="Открыть меню бота" onClick={() => sendBotCallback('ref_open_menu')} />
       </Card>
 
       {showManualLogout && (
